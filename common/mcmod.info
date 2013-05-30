@@ -1,0 +1,20 @@
+[
+{
+	"modid": "CSIM",
+	"name": "Player Inventory Management",
+	"description": "Access other players inventories. Only available to whitelisted people and ops.",
+	"version": "0.0.1",
+	"url": "https://github.com/dlpratte/InventoryManagement",
+	"updateUrl": "",
+	"authorList": [
+		"hancin"
+	],
+	"credits": "Hancin work for Hancin Corp HQ",
+	"logoFile": "",
+	"screenshots": [
+	],
+	"parent":"",
+	"dependencies": [
+	]
+}
+]
