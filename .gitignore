@@ -212,5 +212,6 @@ pip-log.txt
 *.mo
 
 build.properties
+Releases/
 #Mr Developer
 .mr.developer.cfg
