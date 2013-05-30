@@ -11,7 +11,7 @@ public class ItemHeartGold extends ItemBase{
         super(id);
         this.setUnlocalizedName(Strings.HEART_GOLD_NAME);
         this.setCreativeTab(CreativeTabs.tabMisc);
-        
+        setMaxDamage(1000);
     }
     
 }

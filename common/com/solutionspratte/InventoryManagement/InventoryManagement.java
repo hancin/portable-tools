@@ -1,5 +1,6 @@
 package com.solutionspratte.InventoryManagement;
 
+import com.solutionspratte.InventoryManagement.core.handlers.HeartGoldTickHandler;
 import com.solutionspratte.InventoryManagement.item.ModItems;
 import com.solutionspratte.InventoryManagement.lib.Localizations;
 import com.solutionspratte.InventoryManagement.lib.Reference;
@@ -10,7 +11,10 @@ import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import cpw.mods.fml.common.registry.TickRegistry;
+import cpw.mods.fml.relauncher.Side;
 
 /**
  * 
@@ -19,6 +23,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
  */
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION)
+@NetworkMod(clientSideRequired=true, serverSideRequired=true)
 public class InventoryManagement {
     
     @PreInit
@@ -26,6 +31,8 @@ public class InventoryManagement {
     {
         String file = Localizations.localeFiles[0];
         LanguageRegistry.instance().loadLocalization(file, "en_US", true);
+        
+        TickRegistry.registerTickHandler(new HeartGoldTickHandler(), Side.SERVER);
         
         ModItems.init();
     }
