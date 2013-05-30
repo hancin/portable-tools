@@ -1,5 +1,6 @@
 package com.solutionspratte.InventoryManagement;
 
+import com.solutionspratte.InventoryManagement.item.ModItems;
 import com.solutionspratte.InventoryManagement.lib.Reference;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
@@ -21,7 +22,7 @@ public class InventoryManagement {
     @PreInit
     public void preInit(FMLPreInitializationEvent event)
     {
-        
+        ModItems.init();
     }
     
     @Init
