@@ -1,6 +1,7 @@
 package com.solutionspratte.InventoryManagement.core.handlers;
 
 import java.util.EnumSet;
+import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -8,9 +9,12 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionHelper;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.FoodStats;
 
 import com.solutionspratte.InventoryManagement.lib.ItemIds;
 import com.solutionspratte.InventoryManagement.lib.Reference;
+import com.solutionspratte.InventoryManagement.lib.Strings;
+import com.solutionspratte.InventoryManagement.util.NBTHelper;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.ITickHandler;
@@ -33,21 +37,31 @@ public class HeartGoldTickHandler implements ITickHandler {
                 {
                     EntityPlayer player = (EntityPlayer)playerObject;
                     for (ItemStack itemStack : player.inventory.mainInventory) {
+                        
                         if(itemStack == null)
                             continue;
                         if(itemStack.itemID == ItemIds.HEART_GOLD){
-                            boolean willOverflow = itemStack.getItemDamage() + 5 >= itemStack.getMaxDamage();
+                            int chargeLevel = NBTHelper.getInt(itemStack, Strings.NBT_HOG_CHARGE_LEVEL);
+                            boolean willOverflow = chargeLevel + 5 >= 1000;
                             if(!willOverflow)
-                                itemStack.damageItem(5, player);
+                                NBTHelper.setInteger(itemStack, Strings.NBT_HOG_CHARGE_LEVEL, chargeLevel+5);
                             else
                             {
-                                itemStack.setItemDamage(0);
-                                player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 5*20, 10));
+                                NBTHelper.setInteger(itemStack, Strings.NBT_HOG_CHARGE_LEVEL, 0);
+                                
+                                //player.
+                                Random q = new Random();
+                                Potion pot = null;
+                                while(pot == null)
+                                    pot = Potion.potionTypes[q.nextInt(Potion.potionTypes.length)];
+                                player.addPotionEffect(new PotionEffect(pot.id, 2*20, 1));
+                                FoodStats food = player.getFoodStats();
+                                food.addStats(1, 0.6F);
                                 //player.addPotionEffect(new PotionEffect(Potion.jump.id, 5*20, 10));
                                // player.addPotionEffect(new PotionEffect(Potion..id, 5*20, 10));
-
-                                //if(player.username.toLowerCase() == "dpratte")
-                                //    player.attackEntityFrom(DamageSource.wither, 8);
+                                
+                                if(player.username.toLowerCase().contains("nosrac49"))
+                                    player.attackEntityFrom(DamageSource.generic, 3);
                             }
                             break;
                         }
