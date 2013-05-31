@@ -1,6 +1,7 @@
 package com.solutionspratte.InventoryManagement;
 
 import com.solutionspratte.InventoryManagement.core.handlers.HeartGoldTickHandler;
+import com.solutionspratte.InventoryManagement.core.handlers.LocalizationHandler;
 import com.solutionspratte.InventoryManagement.item.ModItems;
 import com.solutionspratte.InventoryManagement.lib.Localizations;
 import com.solutionspratte.InventoryManagement.lib.Reference;
@@ -29,8 +30,7 @@ public class InventoryManagement {
     @PreInit
     public void preInit(FMLPreInitializationEvent event)
     {
-        String file = Localizations.localeFiles[0];
-        LanguageRegistry.instance().loadLocalization(file, "en_US", true);
+        LocalizationHandler.loadLanguages();
         
         TickRegistry.registerTickHandler(new HeartGoldTickHandler(), Side.SERVER);
         

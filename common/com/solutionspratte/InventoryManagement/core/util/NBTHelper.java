@@ -1,4 +1,4 @@
-package com.solutionspratte.InventoryManagement.util;
+package com.solutionspratte.InventoryManagement.core.util;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

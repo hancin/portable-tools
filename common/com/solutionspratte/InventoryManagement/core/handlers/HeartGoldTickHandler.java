@@ -11,10 +11,10 @@ import net.minecraft.potion.PotionHelper;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.FoodStats;
 
+import com.solutionspratte.InventoryManagement.core.util.NBTHelper;
 import com.solutionspratte.InventoryManagement.lib.ItemIds;
 import com.solutionspratte.InventoryManagement.lib.Reference;
 import com.solutionspratte.InventoryManagement.lib.Strings;
-import com.solutionspratte.InventoryManagement.util.NBTHelper;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.ITickHandler;
