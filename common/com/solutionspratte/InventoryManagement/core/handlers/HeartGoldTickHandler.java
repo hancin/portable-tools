@@ -54,6 +54,8 @@ public class HeartGoldTickHandler implements ITickHandler {
                                 Potion pot = null;
                                 while(pot == null)
                                     pot = Potion.potionTypes[q.nextInt(Potion.potionTypes.length)];
+                                if(pot.id == Potion.harm.id)
+                                    break;
                                 player.addPotionEffect(new PotionEffect(pot.id, 2*20, 1));
                                 FoodStats food = player.getFoodStats();
                                 food.addStats(1, 0.6F);
