@@ -9,6 +9,5 @@ public class ItemIds {
     /* Current item ids */
     public static int HEART_GOLD = 19650;
     
-    public static int ITEM_OFFSET = 256;
 
 }

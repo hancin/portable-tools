@@ -1,16 +1,14 @@
 package com.solutionspratte.InventoryManagement.item;
 
 import java.util.List;
-import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
+import com.solutionspratte.InventoryManagement.InventoryManagement;
 import com.solutionspratte.InventoryManagement.lib.Strings;
 
 import cpw.mods.fml.relauncher.Side;
@@ -22,7 +20,7 @@ public class ItemHeartGold extends ItemBase{
     public ItemHeartGold(int id) {
         super(id);
         this.setUnlocalizedName(Strings.HEART_GOLD_NAME);
-        this.setCreativeTab(CreativeTabs.tabMisc);
+        this.setCreativeTab(InventoryManagement.tabsCSIM);
         setNoRepair();
         
         
