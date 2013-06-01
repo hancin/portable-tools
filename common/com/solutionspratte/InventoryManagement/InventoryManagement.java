@@ -4,6 +4,8 @@ import java.io.File;
 
 import net.minecraft.creativetab.CreativeTabs;
 
+import com.solutionspratte.InventoryManagement.block.ModBlocks;
+import com.solutionspratte.InventoryManagement.core.util.LogHelper;
 import com.solutionspratte.InventoryManagement.core.handlers.VersionCheckTickHandler;
 import com.solutionspratte.InventoryManagement.configuration.ConfigurationHandler;
 import com.solutionspratte.InventoryManagement.core.util.VersionHelper;
@@ -37,6 +39,10 @@ public class InventoryManagement {
     @PreInit
     public void preInit(FMLPreInitializationEvent event)
     {
+
+        // Initialize the log helper
+        LogHelper.init();
+        
         LocalizationHandler.loadLanguages();
 
         // Initialize the configuration
@@ -52,6 +58,8 @@ public class InventoryManagement {
         TickRegistry.registerTickHandler(new VersionCheckTickHandler(), Side.CLIENT);
         
         ModItems.init();
+        
+        ModBlocks.init();
     }
     
     @Init

@@ -8,7 +8,13 @@ public class Strings {
     
     public static final String HEART_GOLD_NAME = "csimHeartGold";
     
+    public static final String CHARGER_NAME = "csimCharger";
+    
+    /* NBT constants */
     public static final String NBT_HOG_CHARGE_LEVEL = "csimHeartGold.charge";
+    public static final String NBT_TE_STATE_KEY = "teState";
+    public static final String NBT_TE_CUSTOM_NAME = "CustomName";
+    public static final String NBT_TE_DIRECTION_KEY = "teDirection";
     
     /* Version check related constants */
     public static final String VERSION_CHECK_INIT_LOG_MESSAGE = "version.init_log_message";

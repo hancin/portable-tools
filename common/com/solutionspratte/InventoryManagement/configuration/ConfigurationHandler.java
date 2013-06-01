@@ -7,6 +7,7 @@ import java.util.logging.Level;
 
 import net.minecraftforge.common.Configuration;
 
+import com.solutionspratte.InventoryManagement.lib.BlockIds;
 import com.solutionspratte.InventoryManagement.lib.ItemIds;
 import com.solutionspratte.InventoryManagement.lib.Reference;
 import com.solutionspratte.InventoryManagement.lib.Strings;
@@ -43,6 +44,9 @@ public class ConfigurationHandler {
 
             /* Item configs */
             ItemIds.HEART_GOLD = configuration.getItem(Strings.HEART_GOLD_NAME, ItemIds.HEART_GOLD_DEFAULT).getInt(ItemIds.HEART_GOLD_DEFAULT);
+            
+            /* Block config */
+            BlockIds.CHARGER = configuration.getBlock(Strings.CHARGER_NAME, BlockIds.CHARGER_DEFAULT).getInt(BlockIds.CHARGER_DEFAULT);
             
             /* Item durability configs */
             ConfigurationSettings.HEART_GOLD_MAX_DURABILITY = configuration.get(CATEGORY_DURABILITY, ConfigurationSettings.HEART_GOLD_MAX_DURABILITY_CONFIGNAME, ConfigurationSettings.HEART_GOLD_MAX_DURABILITY_DEFAULT).getInt(ConfigurationSettings.HEART_GOLD_MAX_DURABILITY_DEFAULT);
