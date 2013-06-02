@@ -12,6 +12,7 @@ import buildcraft.api.power.IPowerReceptor;
 import buildcraft.api.power.PowerFramework;
 
 import com.solutionspratte.InventoryManagement.core.util.LogHelper;
+import com.solutionspratte.InventoryManagement.item.ModItems;
 import com.solutionspratte.InventoryManagement.lib.Strings;
 
 public class TileCharger extends TileBase implements IPowerReceptor, IInventory  {
@@ -28,7 +29,8 @@ public class TileCharger extends TileBase implements IPowerReceptor, IInventory 
         inventory = new ItemStack[INVENTORY_SIZE];
         
         powerProvider = PowerFramework.currentFramework.createPowerProvider();
-        powerProvider.configure(20, 25, 50, 25, 1000000); 
+        powerProvider.configure(20, 25, 50, 25, 100); 
+        powerProvider.configurePowerPerdition(25, 40);
     }
     
     //#region IPowerReceptor
@@ -45,7 +47,7 @@ public class TileCharger extends TileBase implements IPowerReceptor, IInventory 
     
     @Override
     public void updateEntity() {
-        if(powerProvider.getEnergyStored() >= 25)
+        if(powerProvider.getEnergyStored() >= 25 && inventory[0] != null && inventory[0].itemID == ModItems.heartGold.itemID)
         {
             doWork();
         }
@@ -55,6 +57,14 @@ public class TileCharger extends TileBase implements IPowerReceptor, IInventory 
     public void doWork() {
         if(worldObj.isRemote)
             return;
+
+        ItemStack itemStack = inventory[0];
+        int currentCharge = itemStack.getItemDamage();
+        
+        if(currentCharge >= itemStack.getMaxDamage())
+            return;
+        
+        itemStack.setItemDamage(currentCharge + 1);
         
         LogHelper.log(Level.INFO, "I'm using "+powerProvider.useEnergy(25, 25, true)+" MJ."); 
     }
