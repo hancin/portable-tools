@@ -16,6 +16,10 @@ public class Strings {
     public static final String NBT_TE_CUSTOM_NAME = "CustomName";
     public static final String NBT_TE_DIRECTION_KEY = "teDirection";
     
+    
+    public static final String CONTAINER_CHARGER_NAME = "container.csimCharger";
+    public static final String CONTAINER_INVENTORY = "container.inventory";
+    
 
     /* TileEntity name constants */
     public static final String TE_CHARGER_NAME = "tileCsimCharger";

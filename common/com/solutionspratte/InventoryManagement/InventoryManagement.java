@@ -5,25 +5,27 @@ import java.io.File;
 import net.minecraft.creativetab.CreativeTabs;
 
 import com.solutionspratte.InventoryManagement.block.ModBlocks;
-import com.solutionspratte.InventoryManagement.core.util.LogHelper;
-import com.solutionspratte.InventoryManagement.core.handlers.VersionCheckTickHandler;
 import com.solutionspratte.InventoryManagement.configuration.ConfigurationHandler;
-import com.solutionspratte.InventoryManagement.core.util.VersionHelper;
 import com.solutionspratte.InventoryManagement.core.handlers.HeartGoldTickHandler;
 import com.solutionspratte.InventoryManagement.core.handlers.LocalizationHandler;
+import com.solutionspratte.InventoryManagement.core.handlers.VersionCheckTickHandler;
+import com.solutionspratte.InventoryManagement.core.proxy.CommonProxy;
+import com.solutionspratte.InventoryManagement.core.util.LogHelper;
+import com.solutionspratte.InventoryManagement.core.util.VersionHelper;
 import com.solutionspratte.InventoryManagement.item.ModItems;
 import com.solutionspratte.InventoryManagement.lib.Reference;
-import com.solutionspratte.InventoryManagement.lib.Strings;
-import com.solutionspratte.InventoryManagement.tileentity.TileCharger;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
+import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PostInit;
 import cpw.mods.fml.common.Mod.PreInit;
+import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -37,6 +39,12 @@ import cpw.mods.fml.relauncher.Side;
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION_NUMBER)
 @NetworkMod(clientSideRequired=true, serverSideRequired=true)
 public class InventoryManagement {
+    
+    @Instance(Reference.MOD_ID)
+    public static InventoryManagement instance;
+
+    @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
+    public static CommonProxy proxy;
     
     public static CreativeTabs tabsCSIM = CreativeTabs.tabMisc;
     
@@ -69,8 +77,10 @@ public class InventoryManagement {
     @Init
     public void init(FMLInitializationEvent event)
     {
-
-        GameRegistry.registerTileEntity(TileCharger.class, Strings.TE_CHARGER_NAME);
+        // Register the GUI Handler
+        NetworkRegistry.instance().registerGuiHandler(instance, proxy);
+        
+        proxy.registerTileEntities();
     }
     
     @PostInit

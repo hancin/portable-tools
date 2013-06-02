@@ -35,8 +35,6 @@ public class ModBlocks {
     }
 
     private static void initBlockRecipes() {
-        
-        
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(charger), new Object[]{"ggg","sls","ggg", Character.valueOf('g'), Item.ingotGold, Character.valueOf('s'), "ingotSilver", Character.valueOf('l'), "ingotLead"}));
         //GameRegistry.addRecipe(new ItemStack(glassBell), new Object[] { "iii", "i i", "i i", Character.valueOf('i'), Block.glass });
         //GameRegistry.addRecipe(new ItemStack(aludelBase), new Object[] { "iii", "sis", "iii", Character.valueOf('i'), Item.ingotIron, Character.valueOf('s'), Block.stone });

@@ -4,6 +4,7 @@
 	<comment>English (en_US) Localization File</comment>
 	<entry key="item.csimHeartGold.name">Heart of Gold</entry>
 	<entry key="tile.csimCharger.name">Charging Station</entry>
+	<entry key="container.csimCharger">Battery Charger</entry>
 	<entry key="version.init_log_message">Initializing remote version check against remote version authority, located at</entry>
 	<entry key="version.uninitialized">Remote version check failed to initialize properly</entry>
 	<entry key="version.current">Currently using the most up to date version (@REMOTE_MOD_VERSION@) of Equivalent Exchange 3 for @MINECRAFT_VERSION@</entry>
