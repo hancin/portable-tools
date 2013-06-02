@@ -64,7 +64,7 @@ public class InventoryManagement {
         // Conduct the version check and log the result
         VersionHelper.execute();
 
-        TickRegistry.registerTickHandler(new HeartGoldTickHandler(), Side.SERVER);
+        //TickRegistry.registerTickHandler(new HeartGoldTickHandler(), Side.SERVER);
         
         // Initialize the Version Check Tick Handler (Client only)
         TickRegistry.registerTickHandler(new VersionCheckTickHandler(), Side.CLIENT);
