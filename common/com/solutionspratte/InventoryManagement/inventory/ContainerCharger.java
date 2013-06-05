@@ -19,7 +19,7 @@ public class ContainerCharger extends Container {
     public ContainerCharger(InventoryPlayer inventoryPlayer, TileCharger charger) {
         this.tileCharger = charger;
         tileCharger.openChest();
-
+        
         this.addSlotToContainer(new Slot(tileCharger, TileCharger.INVENTORY_BATTERY_SLOT, 80, 22));
         
      // Add the player's inventory slots to the container
