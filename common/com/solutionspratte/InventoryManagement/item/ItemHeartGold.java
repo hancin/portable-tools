@@ -3,12 +3,15 @@ package com.solutionspratte.InventoryManagement.item;
 import java.util.HashMap;
 import java.util.List;
 
+import thermalexpansion.api.item.IChargeableItem;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
@@ -20,11 +23,13 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 
-public class ItemHeartGold extends ItemBase{
+public class ItemHeartGold extends ItemBase implements IChargeableItem{
 
     public static final int UNITS_USED = 16;
     public static final int UNITS_USED_SNEAKING = 528;
     public static final int TOTAL_USES = 100;
+    public static final int UNIT_MJ = 200;
+    
     public ItemHeartGold(int id) {
         super(id);
         this.setUnlocalizedName(Strings.HEART_GOLD_NAME);
@@ -103,5 +108,64 @@ public class ItemHeartGold extends ItemBase{
     public EnumRarity getRarity(ItemStack par1ItemStack)
     {
         return EnumRarity.epic;
+    }
+
+    @Override
+    public float receiveEnergy(ItemStack theItem, float energy,
+            boolean doReceive) {
+        
+        float inTransit = 0;
+        if(theItem.stackTagCompound != null)
+            inTransit = theItem.stackTagCompound.getFloat("inTransitEnergyStored");
+        
+        float storableEnergy = Math.max(theItem.getItemDamage() * UNIT_MJ - inTransit, 0);
+        
+        float providedEnergy = Math.min(energy, storableEnergy);
+        
+        if(!doReceive)
+            return providedEnergy;
+        
+        
+        inTransit += providedEnergy;
+        
+        int usableUnits = (int)Math.floor(inTransit / UNIT_MJ);
+        
+        
+        theItem.setItemDamage(Math.max(theItem.getItemDamage() - usableUnits, 0));
+        
+        float newTransit = inTransit % UNIT_MJ;
+        
+
+        if(newTransit != inTransit){
+            if(theItem.stackTagCompound == null)
+                theItem.stackTagCompound = new NBTTagCompound();
+            
+            theItem.stackTagCompound.setFloat("inTransitEnergyStored", newTransit);
+        }
+        
+        
+        return providedEnergy;
+    }
+
+    @Override
+    public float transferEnergy(ItemStack theItem, float energy,
+            boolean doTransfer) {
+
+        //Once its in, it can't get out.
+        return 0;
+    }
+
+    @Override
+    public float getEnergyStored(ItemStack theItem) {
+        int max = theItem.getMaxDamage() * UNIT_MJ;
+        float inTransit = 0;
+        if(theItem.stackTagCompound != null)
+            inTransit = theItem.stackTagCompound.getFloat("inTransitEnergyStored");
+        return Math.min(max - theItem.getItemDamage() * UNIT_MJ + inTransit, max);
+    }
+
+    @Override
+    public float getMaxEnergyStored(ItemStack theItem) {
+        return theItem.getMaxDamage() * UNIT_MJ;
     }
 }
