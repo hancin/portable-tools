@@ -23,6 +23,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ItemHeartGold extends ItemBase{
 
     public static final int UNITS_USED = 16;
+    public static final int UNITS_USED_SNEAKING = 400;
     public static final int TOTAL_USES = 100;
     public ItemHeartGold(int id) {
         super(id);
@@ -44,20 +45,26 @@ public class ItemHeartGold extends ItemBase{
     
     @Override
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer entityPlayer) {
+        
         if(world.isRemote)
             return itemStack;
 
         int available = getMaxDamage() - itemStack.getItemDamage();
         
-        if(available >= UNITS_USED && entityPlayer.canEat(true)){
+        if(entityPlayer.isSneaking() && available >= UNITS_USED_SNEAKING && entityPlayer.canEat(true))
+        {
+            itemStack.setItemDamage(itemStack.getItemDamage() + UNITS_USED_SNEAKING);
+            entityPlayer.getFoodStats().addStats((ItemFood)Item.porkCooked);
+            entityPlayer.addPotionEffect(new PotionEffect(Potion.regeneration.id, 160, 2));
+            entityPlayer.addPotionEffect(new PotionEffect(Potion.resistance.id, 6000, 0));
+            entityPlayer.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 6000, 0));
+        }
+        else if(!entityPlayer.isSneaking() && available >= UNITS_USED && entityPlayer.canEat(true))
+        {
             entityPlayer.getFoodStats().addStats((ItemFood)Item.appleGold);
             
             itemStack.setItemDamage(itemStack.getItemDamage() + UNITS_USED);
             
-            world.playSoundAtEntity(entityPlayer, "random.burp", 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
-            entityPlayer.addPotionEffect(new PotionEffect(Potion.regeneration.id, 60, 3));
-            entityPlayer.addPotionEffect(new PotionEffect(Potion.resistance.id, 600, 0));
-            entityPlayer.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 600, 0));
         }
         
         return itemStack;
