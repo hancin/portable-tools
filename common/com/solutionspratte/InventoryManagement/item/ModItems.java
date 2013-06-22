@@ -17,7 +17,9 @@ public class ModItems {
     {
         heartGold = new ItemHeartGold(ItemIds.HEART_GOLD);
         
-        GameRegistry.addRecipe(new ItemStack(heartGold), new Object[] { "w w", " s ", "w w", Character.valueOf('w'), Item.stick, Character.valueOf('s'), Block.cobblestone});
+        ItemStack setupStack = new ItemStack(heartGold);
+        setupStack.setItemDamage(heartGold.getMaxDamage());
+        GameRegistry.addRecipe(setupStack, new Object[] { "drd", "rgr", "drd", Character.valueOf('d'), Item.diamond, Character.valueOf('g'), Block.blockGold, Character.valueOf('r'), Item.redstone});
 
     }
 }

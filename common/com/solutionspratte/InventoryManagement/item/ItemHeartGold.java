@@ -1,5 +1,6 @@
 package com.solutionspratte.InventoryManagement.item;
 
+import java.util.HashMap;
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -21,13 +22,14 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemHeartGold extends ItemBase{
 
+    public static final int UNITS_USED = 16;
+    public static final int TOTAL_USES = 100;
     public ItemHeartGold(int id) {
         super(id);
         this.setUnlocalizedName(Strings.HEART_GOLD_NAME);
         this.setCreativeTab(InventoryManagement.tabsCSIM);
         setNoRepair();
-        setMaxDamage(16);
-        
+        setMaxDamage(UNITS_USED * TOTAL_USES);
     }
     
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -39,14 +41,19 @@ public class ItemHeartGold extends ItemBase{
     {
         informationLines.add("Alex, what have you done?");
     }
+    
     @Override
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer entityPlayer) {
         if(world.isRemote)
             return itemStack;
+
+        int available = getMaxDamage() - itemStack.getItemDamage();
         
-        if(itemStack.getItemDamage() > 0 && entityPlayer.canEat(true)){
+        if(available >= UNITS_USED && entityPlayer.canEat(true)){
             entityPlayer.getFoodStats().addStats((ItemFood)Item.appleGold);
-            itemStack.setItemDamage(itemStack.getItemDamage() - 1);
+            
+            itemStack.setItemDamage(itemStack.getItemDamage() + UNITS_USED);
+            
             world.playSoundAtEntity(entityPlayer, "random.burp", 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
             entityPlayer.addPotionEffect(new PotionEffect(Potion.regeneration.id, 60, 3));
             entityPlayer.addPotionEffect(new PotionEffect(Potion.resistance.id, 600, 0));
@@ -57,7 +64,7 @@ public class ItemHeartGold extends ItemBase{
     };
     public boolean onItemUse(ItemStack itemStack, EntityPlayer entityPlayer, World world, int x, int y, int z, int sideHit, float hitVecX, float hitVecY, float hitVecZ) {
         int currentBlock = world.getBlockId(x, y, z);
-        
+
         if(currentBlock == Block.cobblestone.blockID)
         {
             if(world.isRemote)
@@ -65,14 +72,20 @@ public class ItemHeartGold extends ItemBase{
             
             world.setBlock(x, y, z, Block.stone.blockID);
             
-        }else if(currentBlock == Block.stone.blockID)
+        }else if(currentBlock == Block.stairsCobblestone.blockID)
         {
             if(world.isRemote)
                 return true;
             
-            world.setBlock(x, y, z, Block.cobblestone.blockID);
+            world.setBlock(x, y, z, Block.stairsStoneBrick.blockID);
             
-            world.playAuxSFXAtEntity((EntityPlayer)null, 1017, x, y, z, 0);
+        }else if(currentBlock == Block.dirt.blockID)
+        {
+            if(world.isRemote)
+                return true;
+            
+            world.setBlock(x, y, z, Block.grass.blockID);
+            
         }
         
         

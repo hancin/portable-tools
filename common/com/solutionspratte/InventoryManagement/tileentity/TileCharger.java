@@ -29,7 +29,7 @@ public class TileCharger extends TileBase implements IPowerReceptor, IInventory 
         inventory = new ItemStack[INVENTORY_SIZE];
         
         powerProvider = PowerFramework.currentFramework.createPowerProvider();
-        powerProvider.configure(20, 25, 50, 25, 100); 
+        powerProvider.configure(20, 25, 200, 100, 10000); 
         powerProvider.configurePowerPerdition(25, 40);
     }
     
@@ -47,7 +47,7 @@ public class TileCharger extends TileBase implements IPowerReceptor, IInventory 
     
     @Override
     public void updateEntity() {
-        if(powerProvider.getEnergyStored() >= 25 && inventory[0] != null && inventory[0].itemID == ModItems.heartGold.itemID)
+        if(powerProvider.getEnergyStored() >= 200 && inventory[0] != null && inventory[0].itemID == ModItems.heartGold.itemID)
         {
             doWork();
         }
@@ -61,12 +61,18 @@ public class TileCharger extends TileBase implements IPowerReceptor, IInventory 
         ItemStack itemStack = inventory[0];
         int currentCharge = itemStack.getItemDamage();
         
-        if(currentCharge >= itemStack.getMaxDamage())
+        if(currentCharge == 0)
             return;
         
-        itemStack.setItemDamage(currentCharge + 1);
+        int usage = (int) Math.ceil(powerProvider.useEnergy(200, 200, true));
+        if(usage != 200)
+            return ;
         
-        LogHelper.log(Level.INFO, "I'm using "+powerProvider.useEnergy(25, 25, true)+" MJ."); 
+        int damage = itemStack.getItemDamage();
+        
+        itemStack.setItemDamage(damage - 1);
+        
+        LogHelper.log(Level.INFO, "I'm using "+usage+" MJ."); 
     }
 
     @Override
