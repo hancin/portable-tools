@@ -23,7 +23,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ItemHeartGold extends ItemBase{
 
     public static final int UNITS_USED = 16;
-    public static final int UNITS_USED_SNEAKING = 400;
+    public static final int UNITS_USED_SNEAKING = 528;
     public static final int TOTAL_USES = 100;
     public ItemHeartGold(int id) {
         super(id);
