@@ -1,7 +1,6 @@
 # A small config tweak for the awx-ee (without creating a custom one)
 
 - hosts: all
-  become: yes
   tasks:
   - name: Change Git Credential Helper setting
     command: git config --global credential.helper '!aws codecommit credential-helper $@'
