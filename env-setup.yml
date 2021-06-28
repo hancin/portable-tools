@@ -6,4 +6,6 @@
     command: git config --global credential.helper '!aws codecommit credential-helper $@'
   - name: Change Git UseHttpPath setting
     command: git config --global credential.UseHttpPath true
+  - name: Try show command
+    command: aws s3 ls
 
